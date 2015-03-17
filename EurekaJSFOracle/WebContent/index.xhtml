@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style type="text/css">
+    #LOGON {
+	   width: 400px;
+	   margin: 10px auto;
+    }
+  </style>
+</h:head>
+<body>
+	<div id="LOGON">
+		<h:form>
+			<p:panel header="INGRESO AL SISTEMA">
+        <p:growl showDetail="true" />
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Usuario:" />
+					<p:inputText value="#{logonController.usuario}" />
+					<p:outputLabel value="Clave:" />
+					<p:password value="#{logonController.clave}" />
+					<f:facet name="footer">
+						<p:commandButton value="Procesar"
+							action="#{logonController.doProcesar()}"
+							ajax="false" />
+					</f:facet>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</div>
+</body>
+</html>

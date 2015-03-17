@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+	<h:form>
+
+		<p:menubar autoDisplay="false">
+		
+			<p:submenu label="Archivo">
+				<p:menuitem value="Salir" url="#" />
+			</p:submenu>
+
+			<p:submenu label="Procesos">
+				<p:menuitem value="Crear cuenta" url="#" />
+				<p:menuitem value="Registrar depósito" action="deposito" />
+				<p:menuitem value="Registrar retiro" url="#" />
+				<p:menuitem value="Registrar transferencia" url="#" />
+				<p:menuitem value="Cancelar cuenta" url="#" />
+			</p:submenu>
+
+			<p:submenu label="Tablas">
+				<p:menuitem value="Clientes" action="mantClientes" />
+				<p:menuitem value="Sucursales" url="#" />
+				<p:menuitem value="Empleados" url="#" />
+				<p:menuitem value="Monedas" url="#" />
+				<p:menuitem value="Tipos de movimientos" url="#" />
+			</p:submenu>
+			
+			<p:submenu label="Consultas">
+        <p:menuitem value="Movimientos por cuenta" action="movimientos" />
+        <p:menuitem value="Movimientos por sucursal" url="#" />
+        <p:menuitem value="Rsumen de movimientos" url="#" />
+      </p:submenu>
+      
+      <p:submenu label="Utilidades">
+        <p:menuitem value="Cambiar clave" url="#" />
+      </p:submenu>
+
+		</p:menubar>
+	</h:form>
+</h:body>
+</html>

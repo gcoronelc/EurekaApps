@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<body>
+    <ui:composition template="./plantilla/plantilla.xhtml">
+      <ui:define name="content">
+        <h:form id="form">
+          <h1>MANTENIMIENTO DE CLIENTES</h1>
+          <p:growl id="showMessage" showDetail="true" />
+          <p:panel header="Criterio de busqueda">
+            <p:outputLabel value="Nombre" /><br/>
+            <p:inputText value="#{mantClientesControl.nombre}" />
+            <p:commandButton icon="ui-icon-search" 
+                             title="Buscar clientes"
+                             ajax="true"
+                             action="#{mantClientesControl.doConsultar()}"
+                             update="panelResultado"/>
+            <p:commandButton update=":form:idDlgCliente" 
+                             oncomplete="PF('dlgCliente').show()" 
+                             icon="ui-icon-plusthick" 
+                             title="Nuevo cliente"
+                             action="#{mantClientesControl.doNuevo()}"/>
+          </p:panel>
+          
+          <!-- Panel de resultado -->
+          
+          <p:panel id="panelResultado" header="Resultado de busqueda">
+            <p:dataTable id="tblClientes"
+                         value="#{mantClientesControl.lista}"
+                         var="r"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                         rowsPerPageTemplate="5,10,15">
+                         
+              <f:facet name="{Exporters}">
+		            <h:commandButton value="Excel" >
+		                <p:dataExporter type="xls" target="tblClientes"  fileName="clientes" />
+		            </h:commandButton>
+		 
+		            <h:commandButton value="PDF">
+		                <p:dataExporter type="pdf" target="tblClientes" fileName="clientes"/>
+		            </h:commandButton>
+		 
+		            <h:commandButton value="CSV">
+		                <p:dataExporter type="csv" target="tblClientes" fileName="clientes" />
+		            </h:commandButton>
+		 
+		            <h:commandButton value="XML">
+		                <p:dataExporter type="xml" target="tblClientes" fileName="clientes" />
+		            </h:commandButton>
+              </f:facet>
+                   
+              <p:column headerText="CODIGO">
+                <h:outputText value="#{r.codigo}" />
+              </p:column>
+              <p:column headerText="PATERNO">
+                <h:outputText value="#{r.paterno}" />
+              </p:column>
+              <p:column headerText="MATERNO">
+                <h:outputText value="#{r.materno}" />
+              </p:column>
+              <p:column headerText="NOMBRE">
+                <h:outputText value="#{r.nombre}" />
+              </p:column>
+              <p:column headerText="ACCION">
+                <!-- Editar cliente -->
+                <p:commandButton update=":form:idDlgCliente" 
+                             oncomplete="PF('dlgCliente').show()" 
+                             icon="ui-icon-pencil" 
+                             title="Editar cliente">
+                  <f:setPropertyActionListener 
+                        value="#{r}" 
+                        target="#{mantClientesControl.clienteEditar}" />
+                </p:commandButton>
+                <!-- Eliminar cliente -->
+                <p:commandButton update=":form:idDlgCliente" 
+                             oncomplete="PF('dlgCliente').show()" 
+                             icon="ui-icon-trash" 
+                             title="Eliminar cliente">
+                  <f:setPropertyActionListener 
+                        value="#{r}" 
+                        target="#{mantClientesControl.clienteEliminar}" />
+                </p:commandButton>
+              </p:column>
+            </p:dataTable>
+          </p:panel>
+          
+          <!-- Editor de registro -->
+          
+          <p:dialog header="#{mantClientesControl.accion} CLIENTE" 
+                    widgetVar="dlgCliente" 
+                    modal="true"
+                    id="idDlgCliente" >
+             <p:panelGrid columns="2">
+               <p:outputLabel value="Código"/>
+               <h:outputText value="#{mantClientesControl.bean.codigo}"  />               
+               <p:outputLabel value="Paterno"/>
+               <p:inputText value="#{mantClientesControl.bean.paterno}"
+                      disabled="${mantClientesControl.eliminar}"/>
+               <p:outputLabel value="Materno"/>
+               <p:inputText value="#{mantClientesControl.bean.materno}"
+                    disabled="${mantClientesControl.eliminar}"/>
+               <p:outputLabel value="Nombre"/>
+               <p:inputText value="#{mantClientesControl.bean.nombre}"
+                  disabled="${mantClientesControl.eliminar}"/>
+               <p:outputLabel value="DNI"/>
+               <p:inputText value="#{mantClientesControl.bean.dni}"
+                    disabled="${mantClientesControl.eliminar}"/>
+               <p:outputLabel value="Ciudad"/>
+               <p:inputText value="#{mantClientesControl.bean.ciudad}"
+                    disabled="${mantClientesControl.eliminar}"/>
+               <p:outputLabel value="Dirección"/>
+               <p:inputText value="#{mantClientesControl.bean.direccion}"
+                    disabled="${mantClientesControl.eliminar}"/>
+               <p:outputLabel value="Teléfono"/>
+               <p:inputText value="#{mantClientesControl.bean.telefono}"
+                    disabled="${mantClientesControl.eliminar}"/>
+               <p:outputLabel value="Email"/>
+               <p:inputText value="#{mantClientesControl.bean.email}"
+                    disabled="${mantClientesControl.eliminar}"/>
+                    
+               <f:facet name="footer">
+                  <p:commandButton value="Procesar"
+                    update=":form:panelResultado :form:showMessage"
+                    action="#{mantClientesControl.doGrabar()}"
+                    icon="ui-icon-disk" 
+                    title="Ejecutar proceso #{mantClientesControl.accion}"/> 
+                </f:facet>
+             </p:panelGrid>
+             
+          </p:dialog>
+          
+        </h:form>
+      </ui:define>
+     </ui:composition>
+  </body>
+</html>

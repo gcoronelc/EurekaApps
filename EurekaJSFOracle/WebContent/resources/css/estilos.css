@@ -1,0 +1,51 @@
+@CHARSET "ISO-8859-1";
+
+body{
+	background-color: #0991C2;
+	color: white;
+	font-size: 12px;
+}
+
+._PAGE{
+	width: 900px;
+	margin: 10px auto;
+	padding: 5px;
+	background-color: #B9F2EF;
+	color: #464949;
+}
+
+._MENU{
+	background-color: #E5DCF3;
+	width: 880px;
+	padding: 5px;
+	margin: 5px;
+}
+
+._WORK{
+  background-color: white;
+  width: 880px;
+  padding: 5px;
+  margin: 5px;
+}
+
+._PIE{
+	background-color: #023F4E;
+	color:#BDDDC2;
+  width: 880px;
+  padding: 5px;
+  text-align: center;
+  margin: 5px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #5882FA;
+    border-bottom-style: solid;
+    border-bottom-color: ##5882FA;
+    border-bottom-width: thin;
+}

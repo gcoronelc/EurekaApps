@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<body>
+    <ui:composition template="./plantilla/plantilla.xhtml">
+      <ui:define name="content">
+        <h:form>
+          <h1>CONSULTAR MOVIMIENTOS</h1>
+          <p:outputLabel value="Cuenta" /><br/>
+          <p:inputText value="#{cuentaController.cuenta}" />
+          <p:commandButton
+            icon="ui-icon-search"
+            value="Consultar" 
+            title="Consultar movimiento de la cuentas."
+            update="tblData"
+            action="#{cuentaController.doTraerListado()}"/>
+            
+          <p:dataTable 
+            id="tblData"
+            value="#{cuentaController.movimientos}"
+            var="r">
+            
+            <p:column headerText="Nro.Mov.">
+              <h:outputText value="#{r.nromov}" />
+            </p:column>
+          
+            <p:column headerText="Fecha">
+              <h:outputText value="#{r.fecha}" >
+                <f:convertDateTime dateStyle="medium"/>
+              </h:outputText>
+            </p:column>
+            
+            <p:column headerText="Tipo">
+              <h:outputText value="#{r.tipo}" />
+            </p:column>
+            
+            <p:column headerText="Descripción">
+              <h:outputText value="#{r.descripcion}" />
+            </p:column>
+            
+            <p:column headerText="Acción">
+              <h:outputText value="#{r.accion}" />
+            </p:column>
+            
+            <p:column headerText="Importe">
+              <h:outputText value="#{r.importe}" />
+            </p:column>
+          
+          </p:dataTable>
+        </h:form>
+      </ui:define>
+     </ui:composition>
+  </body>
+</html>
