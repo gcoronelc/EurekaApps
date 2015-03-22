@@ -9,7 +9,26 @@
 	<body>
     <ui:composition template="./plantilla/plantilla.xhtml">
       <ui:define name="content">
-        <h1>DEPOSITO</h1>
+        <h:form>
+          
+          <h1>DEPOSITO</h1>
+
+          <p:messages id="messages" 
+                      showDetail="true" 
+                      autoUpdate="true" 
+                      closable="true" />
+                      
+          <p:panelGrid columns="2">
+            <p:outputLabel value="Cuenta:" />
+            <p:inputText value="#{cuentaController.cuenta}"/>
+            <p:outputLabel value="Importe:" />
+            <p:inputText value="#{cuentaController.importe}"/>
+          </p:panelGrid>
+          
+          <p:commandButton value="Procesar"
+                           action="#{cuentaController.doDeposito()}"
+                           ajax="false" />
+        </h:form>
       </ui:define>
      </ui:composition>
   </body>

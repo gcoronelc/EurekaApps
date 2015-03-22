@@ -16,7 +16,7 @@ public final class AccesoDB {
       // Paso 1: Cargar el driver a memoria
       Class.forName("com.mysql.jdbc.Driver").newInstance();
       // Paso 2: Obtener el objeto Connection
-      String url = "jdbc:mysql://192.168.1.33:3306/eurekabank";
+      String url = "jdbc:mysql://localhost:3306/eurekabank";
       cn = DriverManager.getConnection(url, "eureka", "admin");
       // --------------------------------------------------
     } catch (SQLException e) {

@@ -8,10 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import oracle.jdbc.OracleTypes;
-import oracle.jdbc.oracore.OracleType;
 import pe.egcc.eureka.app.db.AccesoDB;
-import pe.egcc.eureka.app.domain.Empleado;
 import pe.egcc.eureka.app.util.JdbcUtil;
 
 public class CuentaModel {
@@ -23,9 +20,10 @@ public class CuentaModel {
 			cn = AccesoDB.getConnection();
 			// Inicio de Tx
 			cn.setAutoCommit(false);
+			cn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 			// Paso 1: Leer datos de cuneta
 			String sql = "select dec_cuensaldo, int_cuencontmov " + "from cuenta "
-			    + "where chr_cuencodigo = ? " + "for update ";
+			    + "where chr_cuencodigo = ? ";
 			PreparedStatement pstm = cn.prepareStatement(sql);
 			pstm.setString(1, cuenta);
 			ResultSet rs = pstm.executeQuery();
@@ -51,7 +49,7 @@ public class CuentaModel {
 			sql = "insert into movimiento(chr_cuencodigo,int_movinumero,"
 			    + "dtt_movifecha,chr_emplcodigo,chr_tipocodigo,"
 			    + "dec_moviimporte, chr_cuenreferencia) "
-			    + "values(?,?,sysdate,?,'003',?,null)";
+			    + "values(?,?,sysdate(),?,'003',?,null)";
 			pstm = cn.prepareStatement(sql);
 			pstm.setString(1, cuenta);
 			pstm.setInt(2, cont);

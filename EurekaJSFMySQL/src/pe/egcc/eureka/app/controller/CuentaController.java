@@ -3,9 +3,11 @@ package pe.egcc.eureka.app.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import pe.egcc.eureka.app.model.CuentaModel;
 
@@ -45,8 +47,22 @@ public class CuentaController {
   }
   
   public void doDeposito(){
-    String codEmpl = logonController.getEmpleado().getCodigo();
-    
+	FacesMessage msg;
+	try {
+		// Proceso
+		String codEmpl = logonController.getEmpleado().getCodigo();
+		CuentaModel model = new CuentaModel();
+		model.ejecutarDeposito(cuenta, importe, codEmpl);
+		// Limpiar variables
+		cuenta = "";
+		importe = 0;
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+				"INFO", "El depósito se registro correctamente.");
+	} catch (Exception e) {
+		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+				"ERROR", e.getMessage());
+	}
+    FacesContext.getCurrentInstance().addMessage(null, msg);
   }
   
   public void doRetiro(){
