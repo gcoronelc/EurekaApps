@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listadoClientes2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7234b32e-6dad-4219-9833-f8a37ec5f4ba">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="LOGO" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="NOMBRE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select chr_cliecodigo, vch_cliepaterno, vch_cliematerno, vch_clienombre, chr_cliedni
+from cliente
+where vch_cliepaterno like $P{NOMBRE}
+or vch_cliepaterno like $P{NOMBRE}
+or vch_clienombre like $P{NOMBRE}]]>
+	</queryString>
+	<field name="CHR_CLIECODIGO" class="java.lang.String"/>
+	<field name="VCH_CLIEPATERNO" class="java.lang.String"/>
+	<field name="VCH_CLIEMATERNO" class="java.lang.String"/>
+	<field name="VCH_CLIENOMBRE" class="java.lang.String"/>
+	<field name="CHR_CLIEDNI" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="6" y="5" width="141" height="51" uuid="248846c3-f643-47fc-b1c2-f223f908dc18"/>
+				<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="3" width="412" height="40" uuid="56f1620c-0b02-497a-b4a0-132b43779481"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE CLIENTES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="111" height="20" uuid="283e9bc0-2e37-4d0f-b301-55a99fd278c0"/>
+				<text><![CDATA[CHR_CLIECODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="0" width="111" height="20" uuid="179ab561-c81a-44cf-9c8f-9f0cd5934e47"/>
+				<text><![CDATA[VCH_CLIEPATERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="0" width="111" height="20" uuid="de28d69e-18b8-4f0e-ac2d-39e49ecc266a"/>
+				<text><![CDATA[VCH_CLIEMATERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="0" width="111" height="20" uuid="0f79e0a9-a875-43d1-b449-90c64a4d4816"/>
+				<text><![CDATA[VCH_CLIENOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="0" width="111" height="20" uuid="8c9b7f0f-b7a3-473c-8a14-415df385ed33"/>
+				<text><![CDATA[CHR_CLIEDNI]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="111" height="20" uuid="11ec525a-1618-4508-af80-d3f7fe7318df"/>
+				<textFieldExpression><![CDATA[$F{CHR_CLIECODIGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="111" y="0" width="111" height="20" uuid="f843ae32-beab-4416-b621-0e22f1d3aca3"/>
+				<textFieldExpression><![CDATA[$F{VCH_CLIEPATERNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="0" width="111" height="20" uuid="2ca3ff38-40f3-42a7-9ab1-4034838de6c1"/>
+				<textFieldExpression><![CDATA[$F{VCH_CLIEMATERNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="0" width="111" height="20" uuid="e2f3562c-d72f-45b6-b79e-d6f8f78be318"/>
+				<textFieldExpression><![CDATA[$F{VCH_CLIENOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="0" width="111" height="20" uuid="e280a292-fa1b-4ed6-9ae8-b46998e31bc6"/>
+				<textFieldExpression><![CDATA[$F{CHR_CLIEDNI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
