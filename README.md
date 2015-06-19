@@ -7,9 +7,16 @@ La creación del esquema en Oracle lo tiene en este video: https://www.youtube.c
 APLICACIONES
 ======================================================================================================
 
+
 EurekaAppOracle
 ---------------
 Aplicación cliente/servidor con base de datos Oracle, utilizando JDBC y NetBeans.
 
+
+EurekaAppOracleWithMyBatis
+--------------------------
+Aplicación cliente/servidor con base de datos Oracle, utilizando MyBatis y NetBeans.
+
+Se ilustra el uso de la reutilización de un componente (JPanel) en varias ventanas (JInternalFrame) y el uso de eventos.
 
 
