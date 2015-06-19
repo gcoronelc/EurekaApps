@@ -1,8 +1,13 @@
 En este repositorio se encontrará aplicaciones desarrolladas con la base de datos EUREKABANK.
 
+
+BASE DE DATOS
+======================================================================================================
+
 La base de datos la puede obtener del siguiente repositorio: https://github.com/gcoronelc/databases
 
 La creación del esquema en Oracle lo tiene en este video: https://www.youtube.com/watch?v=qOW90RXepUs
+
 
 APLICACIONES
 ======================================================================================================
