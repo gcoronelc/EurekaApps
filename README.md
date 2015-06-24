@@ -28,5 +28,6 @@ Se ilustra el uso de la reutilización de un componente (JPanel) en varias venta
 JavaWeb_UNI_ENE_2015
 ------------------------
 Aplicación Web con la base de datos Oracle, utilizando JDBC y Eclipse.
+
 Se ilustra el uso de transacciones, un CRUD y consultas con SP.
 
