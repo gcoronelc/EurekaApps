@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="repoMovimientos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8f1990b5-484c-46dd-8464-07bcf2af21bb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select
+      m.chr_cuencodigo cuenta,      m.int_movinumero nromov,
+      m.dtt_movifecha fecha,      m.chr_tipocodigo tipo,
+      t.vch_tipodescripcion descripcion,      t.vch_tipoaccion accion,
+      m.dec_moviimporte importe
+    from tipomovimiento t
+    join movimiento m
+    on t.chr_tipocodigo = m.chr_tipocodigo]]>
+	</queryString>
+	<field name="cuenta" class="java.lang.String"/>
+	<field name="nromov" class="java.math.BigDecimal"/>
+	<field name="fecha" class="java.sql.Timestamp"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="accion" class="java.lang.String"/>
+	<field name="importe" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="283" height="30" uuid="7b8168a7-1a06-439f-a3cc-2efe76910fff"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE MOVIMIENTOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="92" height="20" uuid="099fa0bf-b909-482c-9133-269ab9cab9e2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[nromov]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="0" width="92" height="20" uuid="a828c62a-2887-4b1c-aa7c-ddfd29cef323"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="0" width="50" height="20" uuid="0288b8dc-1f08-47c7-b46b-b566e65e143f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="0" width="134" height="20" uuid="03d379ad-8447-4520-a3f1-89cad57903fe"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[descripcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="0" width="92" height="20" uuid="65c6c514-bf25-4794-a5c2-49047dbd0a1d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[accion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="92" height="20" uuid="62e67508-df3d-4a0f-95d3-9d85d0b1d853"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[importe]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="92" height="20" uuid="c9e8adbb-d467-427a-9b2d-6f1e52d6c7a1"/>
+				<textFieldExpression><![CDATA[$F{nromov}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="0" width="92" height="20" uuid="3adaffd7-1186-420d-94a0-86caa54c7310"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="0" width="50" height="20" uuid="f025f67c-764b-423b-994b-7bf72ee213be"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="234" y="0" width="134" height="20" uuid="123a415e-443b-4c38-a20e-aa34373ee935"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="92" height="20" uuid="31904ffb-23f8-4b08-9abe-fde46a8cb2ed"/>
+				<textFieldExpression><![CDATA[$F{accion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="92" height="20" uuid="d318b50d-985b-4d17-be55-97137d06688e"/>
+				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
