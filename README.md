@@ -25,3 +25,8 @@ Aplicación cliente/servidor con base de datos Oracle, utilizando MyBatis y NetB
 Se ilustra el uso de la reutilización de un componente (JPanel) en varias ventanas (JInternalFrame) y el uso de eventos.
 
 
+JavaWeb_UNI_ENE_2015
+------------------------
+Aplicación Web con la base de datos Oracle, utilizando JDBC y Eclipse.
+Se ilustra el uso de transacciones, un CRUD y consultas con SP.
+
