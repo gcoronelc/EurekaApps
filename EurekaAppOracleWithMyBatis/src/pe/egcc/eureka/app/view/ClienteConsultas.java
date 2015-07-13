@@ -156,4 +156,9 @@ public class ClienteConsultas extends javax.swing.JInternalFrame implements Pane
   public void onSalir() {
     this.dispose();
   }
+
+  @Override
+  public void onExportarPDF() {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
 }

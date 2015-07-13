@@ -9,4 +9,19 @@
 	   {CALL usp_egcc_retiro(#{cuenta},#{importe},#{empleado},#{clave})}
 	</insert>
 
+  <select id="getMovimientos" parameterType="string" resultType="map" >
+    select 
+      m.chr_cuencodigo cuenta,
+      m.int_movinumero nromov,
+      m.dtt_movifecha fecha,
+      m.chr_emplcodigo empleado,
+      t.vch_tipodescripcion tipo,
+      t.vch_tipoaccion accion,
+      m.dec_moviimporte importe
+    from movimiento m
+    join tipomovimiento t
+    on m.chr_tipocodigo = t.chr_tipocodigo
+    where m.chr_cuencodigo = #{cuenta}
+  </select>
+  
 </mapper>

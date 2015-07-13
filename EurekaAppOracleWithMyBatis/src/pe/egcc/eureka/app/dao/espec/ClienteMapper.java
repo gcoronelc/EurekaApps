@@ -11,4 +11,12 @@ public interface ClienteMapper {
 
   List<ComboBean> getListaDistritos();
   
+  void actualizar(ClienteBean clienteBean);
+  
+  void insertar(ClienteBean clienteBean);
+  
+  int getCuentas(String codigo);
+  
+  void eliminar(String codigo);
+  
 }

@@ -35,6 +35,10 @@ public class PanelCriterioClientes extends javax.swing.JPanel {
   public void setBtnCSVEnabled(boolean value) {
     btnCSV.setEnabled(value);
   }
+  
+  public void setBtnPDFEnabled(boolean value) {
+    btnPDF.setEnabled(value);
+  }
 
   public void setBtnNuevoEnabled(boolean value) {
     btnNuevo.setEnabled(value);
@@ -76,6 +80,7 @@ public class PanelCriterioClientes extends javax.swing.JPanel {
     btnEditar = new javax.swing.JButton();
     btnEliminar = new javax.swing.JButton();
     btnSalir = new javax.swing.JButton();
+    btnPDF = new javax.swing.JButton();
 
     jLabel1.setText("Código");
 
@@ -143,6 +148,14 @@ public class PanelCriterioClientes extends javax.swing.JPanel {
       }
     });
 
+    btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pe/egcc/eureka/app/img/pdf.png"))); // NOI18N
+    btnPDF.setToolTipText("Exportar a PDF");
+    btnPDF.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnPDFActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
@@ -176,6 +189,8 @@ public class PanelCriterioClientes extends javax.swing.JPanel {
         .addComponent(btnExcel)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(btnCSV)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(btnPDF)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(btnNuevo)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -213,7 +228,8 @@ public class PanelCriterioClientes extends javax.swing.JPanel {
               .addComponent(txtMaterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+          .addComponent(btnPDF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
@@ -276,6 +292,12 @@ public class PanelCriterioClientes extends javax.swing.JPanel {
     }
   }//GEN-LAST:event_btnSalirActionPerformed
 
+  private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+    if (panelCriterioListener != null) {
+      panelCriterioListener.onExportarPDF();
+    }
+  }//GEN-LAST:event_btnPDFActionPerformed
+
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btnBuscar;
@@ -284,6 +306,7 @@ public class PanelCriterioClientes extends javax.swing.JPanel {
   private javax.swing.JButton btnEliminar;
   private javax.swing.JButton btnExcel;
   private javax.swing.JButton btnNuevo;
+  private javax.swing.JButton btnPDF;
   private javax.swing.JButton btnSalir;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;

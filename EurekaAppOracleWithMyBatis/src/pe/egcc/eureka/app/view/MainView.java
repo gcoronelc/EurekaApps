@@ -31,15 +31,15 @@ public class MainView extends javax.swing.JFrame {
     desktopPane = new javax.swing.JDesktopPane();
     menuBar = new javax.swing.JMenuBar();
     menuProceso = new javax.swing.JMenu();
-    jMenuItem1 = new javax.swing.JMenuItem();
+    menuProcesoRetiro = new javax.swing.JMenuItem();
     jMenuItem2 = new javax.swing.JMenuItem();
     jMenuItem3 = new javax.swing.JMenuItem();
     menuTabla = new javax.swing.JMenu();
     menuTablaClientes = new javax.swing.JMenuItem();
-    jMenuItem4 = new javax.swing.JMenuItem();
+    menuTableEmpleados = new javax.swing.JMenuItem();
     menuConsulta = new javax.swing.JMenu();
     menuConsultaClientes = new javax.swing.JMenuItem();
-    jMenuItem5 = new javax.swing.JMenuItem();
+    menuConsultaEmpleados = new javax.swing.JMenuItem();
     jMenuItem6 = new javax.swing.JMenuItem();
     menuReporte = new javax.swing.JMenu();
     menuReporteClientes = new javax.swing.JMenuItem();
@@ -52,8 +52,13 @@ public class MainView extends javax.swing.JFrame {
 
     menuProceso.setText("Proceso");
 
-    jMenuItem1.setText("jMenuItem1");
-    menuProceso.add(jMenuItem1);
+    menuProcesoRetiro.setText("Retiro");
+    menuProcesoRetiro.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuProcesoRetiroActionPerformed(evt);
+      }
+    });
+    menuProceso.add(menuProcesoRetiro);
 
     jMenuItem2.setText("jMenuItem2");
     menuProceso.add(jMenuItem2);
@@ -73,8 +78,13 @@ public class MainView extends javax.swing.JFrame {
     });
     menuTabla.add(menuTablaClientes);
 
-    jMenuItem4.setText("jMenuItem4");
-    menuTabla.add(jMenuItem4);
+    menuTableEmpleados.setText("Empleados");
+    menuTableEmpleados.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuTableEmpleadosActionPerformed(evt);
+      }
+    });
+    menuTabla.add(menuTableEmpleados);
 
     menuBar.add(menuTabla);
 
@@ -88,8 +98,13 @@ public class MainView extends javax.swing.JFrame {
     });
     menuConsulta.add(menuConsultaClientes);
 
-    jMenuItem5.setText("jMenuItem5");
-    menuConsulta.add(jMenuItem5);
+    menuConsultaEmpleados.setText("Empleados");
+    menuConsultaEmpleados.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuConsultaEmpleadosActionPerformed(evt);
+      }
+    });
+    menuConsulta.add(menuConsultaEmpleados);
 
     jMenuItem6.setText("jMenuItem6");
     menuConsulta.add(jMenuItem6);
@@ -146,6 +161,18 @@ public class MainView extends javax.swing.JFrame {
     cargarFormulario(ClienteReporte.class);
   }//GEN-LAST:event_menuReporteClientesActionPerformed
 
+  private void menuConsultaEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultaEmpleadosActionPerformed
+    cargarFormulario(EmpleadoConsultas.class);
+  }//GEN-LAST:event_menuConsultaEmpleadosActionPerformed
+
+  private void menuTableEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTableEmpleadosActionPerformed
+    cargarFormulario(EmpleadoMantenimiento.class);
+  }//GEN-LAST:event_menuTableEmpleadosActionPerformed
+
+  private void menuProcesoRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProcesoRetiroActionPerformed
+    cargarFormulario(ProcesoRetiroView.class);
+  }//GEN-LAST:event_menuProcesoRetiroActionPerformed
+
   /**
    * @param args the command line arguments
    */
@@ -183,22 +210,22 @@ public class MainView extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JDesktopPane desktopPane;
-  private javax.swing.JMenuItem jMenuItem1;
   private javax.swing.JMenuItem jMenuItem2;
   private javax.swing.JMenuItem jMenuItem3;
-  private javax.swing.JMenuItem jMenuItem4;
-  private javax.swing.JMenuItem jMenuItem5;
   private javax.swing.JMenuItem jMenuItem6;
   private javax.swing.JMenuItem jMenuItem7;
   private javax.swing.JMenuItem jMenuItem9;
   private javax.swing.JMenuBar menuBar;
   private javax.swing.JMenu menuConsulta;
   private javax.swing.JMenuItem menuConsultaClientes;
+  private javax.swing.JMenuItem menuConsultaEmpleados;
   private javax.swing.JMenu menuProceso;
+  private javax.swing.JMenuItem menuProcesoRetiro;
   private javax.swing.JMenu menuReporte;
   private javax.swing.JMenuItem menuReporteClientes;
   private javax.swing.JMenu menuTabla;
   private javax.swing.JMenuItem menuTablaClientes;
+  private javax.swing.JMenuItem menuTableEmpleados;
   private javax.swing.JMenu menuUtil;
   // End of variables declaration//GEN-END:variables
 

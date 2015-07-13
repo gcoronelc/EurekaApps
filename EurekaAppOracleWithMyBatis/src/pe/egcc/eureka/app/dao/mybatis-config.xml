@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="pe/egcc/eureka/app/dao/mapper/EmpleadoMapper.xml" />
 		<mapper resource="pe/egcc/eureka/app/dao/mapper/ClienteMapper.xml" />
 		<mapper resource="pe/egcc/eureka/app/dao/mapper/CuentaMapper.xml" />
+		<mapper resource="pe/egcc/eureka/app/dao/mapper/ContadorMapper.xml" />
 	</mappers>
 </configuration>
 

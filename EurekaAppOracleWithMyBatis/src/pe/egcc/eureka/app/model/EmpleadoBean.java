@@ -9,7 +9,7 @@ public class EmpleadoBean {
   private String ciudad;
   private String direccion;
   private String usuario;
-  
+
   public EmpleadoBean() {
   }
 
@@ -67,6 +67,30 @@ public class EmpleadoBean {
 
   public void setUsuario(String usuario) {
     this.usuario = usuario;
+  }
+
+  public void establecerDatos() {
+    if (codigo == null) {
+      codigo = "";
+    }
+    if (paterno == null) {
+      paterno = "";
+    }
+    if (materno == null) {
+      materno = "";
+    }
+    if (nombre == null) {
+      nombre = "";
+    }
+    if (ciudad == null) {
+      ciudad = "";
+    }
+    if (direccion == null) {
+      direccion = "";
+    }
+    if (usuario == null) {
+      usuario = "";
+    }
   }
 
 }

@@ -1,9 +1,29 @@
 package pe.egcc.eureka.app.view;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import pe.egcc.eureka.app.listener.PanelCriterioListener;
 import pe.egcc.eureka.app.model.ClienteBean;
+import pe.egcc.eureka.app.util.EurekaUtil;
+import pe.egcc.eureka.app.util.MyMessage;
+import pe.egcc.eureka.app.util.Session;
 
 /**
  *
@@ -57,10 +77,7 @@ public class ClienteMantenimiento extends javax.swing.JInternalFrame implements 
 
     tblData.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null}
+
       },
       new String [] {
         "CODIGO", "PATERNO", "MATERNO", "NOMBRE", "DNI", "EMAIL"
@@ -74,6 +91,7 @@ public class ClienteMantenimiento extends javax.swing.JInternalFrame implements 
         return canEdit [columnIndex];
       }
     });
+    tblData.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     jScrollPane1.setViewportView(tblData);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -88,8 +106,7 @@ public class ClienteMantenimiento extends javax.swing.JInternalFrame implements 
       .addGroup(layout.createSequentialGroup()
         .addComponent(panelCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(0, 0, Short.MAX_VALUE))
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
     );
 
     pack();
@@ -114,6 +131,200 @@ public class ClienteMantenimiento extends javax.swing.JInternalFrame implements 
     // Obtenemos la lista de clientes
     listaClientes = lista;
     // Cargar datos en la tabla
+    llenarTabla();
+  }
+
+  @Override
+  public void onExportarExcel() {
+    try {
+      // Verificar si existe datos
+      if (listaClientes == null || listaClientes.isEmpty()) {
+        return;
+      }
+      // Archivo destino
+      String archivo = "C:\\EGCC\\files\\clientes.xls";
+      // Seleccionar archivo destino
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+      int result = fileChooser.showOpenDialog(this);
+      if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        archivo = selectedFile.getAbsolutePath();
+      } else {
+        return;
+      }
+
+      // Proceso de crear el archivo excel
+      // Paso 1: Crear el libro
+      String plantilla = "/pe/egcc/eureka/app/plantillas/clientes.xls";
+      InputStream inp = Class.class.getResourceAsStream(plantilla);
+      HSSFWorkbook objWB = new HSSFWorkbook(inp);
+      // Paso 2: Crear la hoja
+      HSSFSheet hoja = objWB.getSheetAt(0);
+      // Cargar data a la hoja
+      HSSFRow filaData = null;
+      int nroFila = 1;
+      for (ClienteBean clienteBean : listaClientes) {
+        filaData = hoja.createRow(nroFila);
+        filaData.createCell(0).setCellValue(clienteBean.getCodigo());
+        filaData.createCell(1).setCellValue(clienteBean.getPaterno());
+        filaData.createCell(2).setCellValue(clienteBean.getMaterno());
+        filaData.createCell(3).setCellValue(clienteBean.getNombre());
+        filaData.createCell(4).setCellValue(clienteBean.getDni());
+        filaData.createCell(5).setCellValue(clienteBean.getTelefono());
+        filaData.createCell(6).setCellValue(clienteBean.getEmail());
+        nroFila++;
+      }
+      // Crear el archivo
+      File objFile = new File(archivo);
+      FileOutputStream archivoSalida = new FileOutputStream(objFile);
+      objWB.write(archivoSalida);
+      archivoSalida.close();
+      MyMessage.showInfo(this, "Proceso ejecutado correctamente.");
+    } catch (IOException ex) {
+      ex.printStackTrace();
+      MyMessage.showError(this, "No se tiene permiso para crear el archivo.");
+    }
+  }
+
+  @Override
+  public void onExportarCSV() {
+    FileWriter fileWriter = null;
+    CSVPrinter csvFilePrinter = null;
+    try {
+      // Verificar si existe datos
+      if (listaClientes == null || listaClientes.isEmpty()) {
+        return;
+      }
+      // Archivo destino
+      String archivo = "C:\\EGCC\\files\\clientes.csv";
+
+      // Seleccionar archivo destino
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+      int result = fileChooser.showOpenDialog(this);
+      if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        archivo = selectedFile.getAbsolutePath();
+      } else {
+        return;
+      }
+
+      // Proceso de crear el archivo excel
+      String NEW_LINE_SEPARATOR = "\n";
+      Object[] FILE_HEADER = {"CODIGO", "PATERNO", "MATERNO", "NOMBRE", "EMAIL"};
+      CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+
+      fileWriter = new FileWriter(archivo);
+      csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
+      csvFilePrinter.printRecord(FILE_HEADER);
+
+      for (ClienteBean clienteBean : listaClientes) {
+        List record = new ArrayList();
+        record.add(clienteBean.getCodigo());
+        record.add(clienteBean.getPaterno());
+        record.add(clienteBean.getMaterno());
+        record.add(clienteBean.getNombre());
+        record.add(clienteBean.getEmail());
+        csvFilePrinter.printRecord(record);
+      }
+
+      MyMessage.showInfo(this, "Proceso ejecutado correctamente.");
+
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      MyMessage.showError(this, "No se tiene permiso para crear el archivo.");
+    } finally {
+      try {
+        if (fileWriter != null) {
+          fileWriter.flush();
+          fileWriter.close();
+        }
+        if (csvFilePrinter != null) {
+          csvFilePrinter.close();
+        }
+      } catch (Exception e) {
+      }
+    }
+  }
+
+  @Override
+  public void onNuevo() {
+    ClienteEdicion obj = new ClienteEdicion(null, true);
+    obj.setBean(null);
+    obj.setAccion(EurekaUtil.EDICION_NUEVO);
+    obj.setVisible(true);
+    // Click en el botón cancelar
+    if (Session.get("bean") == null) {
+      return;
+    }
+    // Click en el botón procesar
+    ClienteBean bean = (ClienteBean) Session.get("bean");
+    listaClientes.add(0, bean);
+    llenarTabla();
+    tblData.setRowSelectionInterval(0, 0);
+  }
+
+  @Override
+  public void onEditar() {
+    if (listaClientes == null) {
+      return;
+    }
+    int p = tblData.getSelectedRow();
+    if (p == -1) {
+      return;
+    }
+    ClienteEdicion obj = new ClienteEdicion(null, true);
+    obj.setBean(listaClientes.get(p));
+    obj.setAccion(EurekaUtil.EDICION_EDITAR);
+    obj.setVisible(true);
+    // Click en el botón cancelar
+    if (Session.get("bean") == null) {
+      return;
+    }
+    // Click en el botón procesar
+    ClienteBean bean = (ClienteBean) Session.get("bean");
+    listaClientes.set(p, bean);
+    // llenarTabla();
+    tblData.setValueAt(bean.getCodigo(), p, 0);
+    tblData.setValueAt(bean.getPaterno(), p, 1);
+    tblData.setValueAt(bean.getMaterno(), p, 2);
+    tblData.setValueAt(bean.getNombre(), p, 3);
+    tblData.setValueAt(bean.getDni(), p, 4);
+    tblData.setValueAt(bean.getEmail(), p, 5);
+  }
+
+  @Override
+  public void onEliminar() {
+    if (listaClientes == null) {
+      return;
+    }
+    int p = tblData.getSelectedRow();
+    if (p == -1) {
+      return;
+    }
+    ClienteEdicion obj = new ClienteEdicion(null, true);
+    obj.setBean(listaClientes.get(p));
+    obj.setAccion(EurekaUtil.EDICION_ELIMINAR);
+    obj.setVisible(true);
+    // Click en el botón cancelar
+    if (Session.get("bean") == null) {
+      return;
+    }
+    // Click en el botón procesar
+    listaClientes.remove(p);
+    //llenarTabla();
+    ((DefaultTableModel) tblData.getModel()).removeRow(p);
+  }
+
+  @Override
+  public void onSalir() {
+    this.dispose();
+  }
+
+  private void llenarTabla() {
     DefaultTableModel tabla;
     tabla = (DefaultTableModel) tblData.getModel();
     tabla.setRowCount(0);
@@ -124,28 +335,103 @@ public class ClienteMantenimiento extends javax.swing.JInternalFrame implements 
     }
   }
 
-  @Override
-  public void onExportarExcel() {
+  private void opcion01() {
+    try {
+      // Verificar si existe datos
+      if (listaClientes == null || listaClientes.isEmpty()) {
+        return;
+      }
+      // Archivo destino
+      String archivo = "C:\\EGCC\\files\\clientes.xls";
+      // Seleccionar archivo destino
+      // Esto es una tarea.
+
+      // Proceso de crear el archivo excel
+      // Paso 1: Crear el libro
+      HSSFWorkbook objWB = new HSSFWorkbook();
+      // Paso 2: Crear la hoja
+      HSSFSheet hoja = objWB.createSheet("LISTADO DE CLIENTES");
+      // Paso 3: Crear la cabecera
+      HSSFRow filaData = hoja.createRow(0);
+      filaData.createCell(0).setCellValue("CODIGO");
+      filaData.createCell(1).setCellValue("PATERNO");
+      filaData.createCell(2).setCellValue("MATERNO");
+      filaData.createCell(3).setCellValue("NOMBRE");
+      filaData.createCell(4).setCellValue("DNI");
+      filaData.createCell(5).setCellValue("TELEFONO");
+      filaData.createCell(6).setCellValue("EMAIL");
+      // Cargar data a la hoja
+      int nroFila = 1;
+      for (ClienteBean clienteBean : listaClientes) {
+        filaData = hoja.createRow(nroFila);
+        filaData.createCell(0).setCellValue(clienteBean.getCodigo());
+        filaData.createCell(1).setCellValue(clienteBean.getPaterno());
+        filaData.createCell(2).setCellValue(clienteBean.getMaterno());
+        filaData.createCell(3).setCellValue(clienteBean.getNombre());
+        filaData.createCell(4).setCellValue(clienteBean.getDni());
+        filaData.createCell(5).setCellValue(clienteBean.getTelefono());
+        filaData.createCell(6).setCellValue(clienteBean.getEmail());
+        nroFila++;
+      }
+      // Crear el archivo
+      File objFile = new File(archivo);
+      FileOutputStream archivoSalida = new FileOutputStream(objFile);
+      objWB.write(archivoSalida);
+      archivoSalida.close();
+      MyMessage.showInfo(this, "Proceso ejecutado correctamente.");
+    } catch (IOException ex) {
+      MyMessage.showError(this, "No se tiene permiso para crear el archivo.");
+    }
+
   }
 
   @Override
-  public void onExportarCSV() {
+  public void onExportarPDF() {
+    Document document = null;
+    try {
+      // Verificar si existe datos
+      if (listaClientes == null || listaClientes.isEmpty()) {
+        return;
+      }
+      // Archivo destino
+      String archivo = "C:\\EGCC\\files\\clientes.pdf";
+      // step 1
+      document = new Document();
+      // step 2
+      PdfWriter.getInstance(document, new FileOutputStream(archivo));
+      // step 3
+      document.open();
+      // step 4: tabla
+      PdfPTable table = new PdfPTable(5);
+      // step 5: Cabeceras
+      table.addCell("CODIGO");
+      table.addCell("PATERNO");
+      table.addCell("MATERNO");
+      table.addCell("NOMBRE");
+      table.addCell("EMAIL");
+      // step 6: Data
+      for (ClienteBean clienteBean : listaClientes) {
+        table.addCell(clienteBean.getCodigo());
+        table.addCell(clienteBean.getPaterno());
+        table.addCell(clienteBean.getMaterno());
+        table.addCell(clienteBean.getNombre());
+        table.addCell(clienteBean.getEmail());
+      }
+      // step 7: Cargar la tabla
+      document.add(table);
+      // step 8: Fin
+      MyMessage.showInfo(this, "Proceso ejecutado correctamente.");
+
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      MyMessage.showError(this, "No se tiene permiso para crear el archivo.");
+    } finally {
+      try {
+        if(document != null) document.close();
+      } catch (Exception e) {
+      }
+    }
+
   }
 
-  @Override
-  public void onNuevo() {
-  }
-
-  @Override
-  public void onEditar() {
-  }
-
-  @Override
-  public void onEliminar() {
-  }
-
-  @Override
-  public void onSalir() {
-    this.dispose();
-  }
 }
